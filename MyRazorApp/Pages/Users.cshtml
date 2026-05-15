@@ -1,0 +1,129 @@
+@page
+@model UsersModel
+
+@* <h1>我的第一个Razor页面</h1>
+
+<p>消息：@Model.Message</p>
+<p>年龄：@Model.Age</p> *@
+
+@{
+    Layout = null;
+}
+
+<style>
+    body {
+        margin: 0;
+        padding: 30px;
+        background: #f5f5f5;
+        font-family: Arial;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+        color: #333;
+        text-align: center;
+    }
+/* 新增：表单样式 */
+    .add-form {
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        border: 1px solid #eee;
+    }
+    .add-form input {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        flex: 1;
+    }
+    .add-form button {
+        padding: 10px 20px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .add-form button:hover {
+        background: #0056b3;
+    }
+    /* 新增：错误提示样式 */
+    .error-msg {
+        color: #721c24;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background: #007bff;
+        color: white;
+    }
+    tr:hover {
+        background: #f0f0f0;
+    }
+    .back {
+        display: inline-block;
+        margin-bottom: 20px;
+        padding: 8px 16px;
+        background: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+    }
+</style>
+
+<div class="container">
+    <a asp-page="Index" class="back">← 返回首页</a>
+    <h1>SQLite 用户管理</h1>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="error-msg">
+            <strong>❌ 操作失败：</strong> @Model.ErrorMessage
+        </div>
+    }
+    <form method="post" class="add-form">
+        <input type="text" asp-for="NewUser.Name" placeholder="输入姓名" required />
+        <input type="number" asp-for="NewUser.Age" placeholder="输入年龄" required />
+        <button type="submit">确认添加</button>
+    </form>
+    
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>姓名</th>
+            <th>年龄</th>
+        </tr>
+        @foreach (Models.User user in Model.UserList)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Name</td>
+                <td>@user.Age</td>
+            </tr>
+        }
+    </table>
+</div>

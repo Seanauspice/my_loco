@@ -1,0 +1,84 @@
+﻿@page
+@model IndexModel
+@{
+    Layout=null;
+
+    string bgImage = Model.CurrentBg switch
+    {
+        2 => "/images/bg1.png",
+        3 => "/images/bg2.png",
+        _ => "/images/bg3.png"
+    };
+
+}
+
+<style>
+    /* 页面样式：全屏背景 + 居中内容 */
+    body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background-image: url('@bgImage');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+    }
+
+    .container {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 50px 80px;
+        border-radius: 15px;
+        backdrop-filter: blur(5px);
+    }
+
+    h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        padding: 14px 30px;
+        font-size: 18px;
+        margin: 10px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .btn-users {
+        background: #007bff;
+        color: white;
+    }
+
+    .btn-bg {
+        background: #28a745;
+        color: white;
+    }
+
+    .btn:hover {
+        opacity: 0.8;
+    }
+</style>
+
+<div class="container">
+    @* <h1>Welcome My Razor Page</h1> *@
+    <h1>@Model.Slogan</h1>
+    <p>基于 .NET Razor Pages + Insql + SQLite 开发</p>
+    
+    <a asp-page="Users">
+        <button class="btn btn-users">进入用户列表</button>
+    </a>
+
+    <form method="post" style="display: inline;">
+        
+        <input type="hidden" name="currentBg" value="@Model.CurrentBg" />
+        <button asp-page-handler="ChangeBg" class="btn btn-bg">切换背景</button>
+    </form>
+</div>
